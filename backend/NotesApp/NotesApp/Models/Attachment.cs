@@ -1,8 +1,11 @@
 namespace NotesApp.Models;
 
-public class Attachment
+public class Attachment : BaseEntity
 {
-    public int AttachmentId { get; set; }
     public int NoteId { get; set; }
-    public IFormFile File { get; set; }
+    public string FilePath { get; set; }
+    public string FileName { get; set; }
+    public string ContentType { get; set;  }
+    
+    public Note Note { get; set; }
 }

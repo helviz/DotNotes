@@ -1,11 +1,13 @@
 namespace NotesApp.Models;
 
-public class Tag
+public class Tag : BaseEntity
 {
-   public int TagId { get; set; }
+   
     public string Name { get; set; }
     public int UserId { get; set; }
 
-    public ICollection<Note> Notes { get;  }= new List<Note>();
+    
+    public User User { get; set; }
+    public ICollection<Tag> Tags { get;  }= new List<Tag>();
 
 }
