@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NotesApp.Models;
 
-namespace NotesApp.DbContext;
+namespace NotesApp.Data;
 
 public class NotesContext : Microsoft.EntityFrameworkCore.DbContext
 {
