@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using NotesApp.Models;
 using NotesApp.Data;
 
@@ -37,8 +38,16 @@ public class GenericRepository<T> : IGenericRepository<T> where T: BaseEntity
         entity.IsDelete = true;
         _context.Set<T>().Update(entity);
         await _context.SaveChangesAsync();
-        
+    }
+    
+    public async Task<T?> FindAsync(Expression<Func<T, bool>> predicate)
+    {
+        return await _context.Set<T>().FirstOrDefaultAsync(predicate);
+    }
 
+    public async Task<List<T>> FindAllAsync(Expression<Func<T, bool>> predicate)
+    {
+        return await _context.Set<T>().Where(predicate).ToListAsync();
     }
 
 
