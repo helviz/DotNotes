@@ -4,11 +4,11 @@ using NotesApp.Repository;
 
 namespace NotesApp.Service.Impl;
 
-public class GenericServiceImpl<T> : IGenericService<T> where T : BaseEntity
+public class GenericService<T> : IGenericService<T> where T : BaseEntity
 {
     private readonly IGenericRepository<T> _repository; 
     
-    public GenericServiceImpl (IGenericRepository<T> repository)
+    public GenericService (IGenericRepository<T> repository)
     {
         _repository = repository;
     }
