@@ -1,6 +1,7 @@
 using NotesApp.Models;
 using NotesApp.Repository.Impl;
 using NotesApp.Repository;
+using NotesApp.Utils;
 
 namespace NotesApp.Service.Impl;
 
@@ -18,19 +19,25 @@ public class GenericService<T> : IGenericService<T> where T : BaseEntity
 
     public async Task<T> GetById(int id)
     {
-        var result =  await _repository.GetByIdAsync(id);
-        if (result == null)
+        var entity =  await _repository.GetByIdAsync(id);
+        if (entity == null)
         {
-            throw new Exception("Result not found");
+            throw new NoteException(
+                $"{typeof(T).Name} with id {id} not found",
+                ErrorCode.NotFound
+            );
         }
-        return result; 
+        return entity; 
     }
 
     public async Task InsertAsync(T entity)
     {
         if (entity == null)
         {
-            throw new ArgumentNullException(nameof(entity));
+            throw new NoteException(
+                $"{typeof(T).Name} cannot be null",
+                ErrorCode.NullEntity
+            );
         }
         await _repository.AddAsync(entity);
     }
@@ -38,16 +45,33 @@ public class GenericService<T> : IGenericService<T> where T : BaseEntity
     public async Task DeleteById(int id)
     {
         var  entity = await _repository.GetByIdAsync(id);
-        if (entity != null)
+        if (entity == null)
         {
-            await _repository.DeleteAsync(entity);
-            return; 
+            throw new NoteException(
+                $"typeof(T).Name with id{id} not found",
+                ErrorCode.NotFound
+            );
         }
-        throw new Exception( "Entity not found");
+        await _repository.DeleteAsync(entity);
     }
 
     public async Task UpdateById(T entity)
     {
+        if (entity == null)
+        {
+            throw new NoteException(
+                $"typeof(T).Name cannot be null",
+                ErrorCode.NullEntity);
+        }
+
+        var existing = _repository.GetByIdAsync(entity.Id);
+
+        if (existing == null)
+        {
+            throw new NoteException(
+                $"typeof(T).Name cannot be null", ErrorCode.NullEntity);
+        }
+
         await _repository.UpdateAsync(entity);
         
     }
