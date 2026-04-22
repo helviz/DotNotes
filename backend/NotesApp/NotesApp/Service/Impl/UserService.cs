@@ -21,7 +21,7 @@ public class UserService : IUserService
         if (existing != null)
             throw new NoteException("User already exists");
 
-        user.Password = HashPassword(user.Password);
+        user.PasswordHash = HashPassword(user.PasswordHash);
 
         await _userRepository.AddAsync(user);
         return user; 
@@ -51,7 +51,7 @@ public class UserService : IUserService
     {
         var user = await _userRepository.FindAsync(u => u.Email == email);
 
-        if (user == null || !VerifyPassword(password, user.Password))
+        if (user == null || !VerifyPassword(password, user.PasswordHash))
             throw new NoteException("Invalid credentials");
 
         return user;
