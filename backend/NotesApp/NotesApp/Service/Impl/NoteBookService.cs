@@ -3,9 +3,9 @@ using NotesApp.Repository;
 
 namespace NotesApp.Service.Impl;
 
-public class NoteBookService : GenericService<NoteBook>
+public class NoteBookService : GenericService<NoteBook> , INoteBookService
 {
-    public NoteBookService(INotebookRepository repository) : base(repository)
+    public NoteBookService(IGenericRepository<NoteBook> repository) : base(repository)
     {
         
     }
