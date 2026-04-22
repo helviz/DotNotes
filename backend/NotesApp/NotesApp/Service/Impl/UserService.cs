@@ -32,7 +32,7 @@ public class UserService : IUserService
     {
         var user = await _userRepository.GetByIdAsync(id);
         if (user == null)
-            throw new NoteException("user not found");
+            throw new NoteException("user not found", ErrorCode.NotFound);
         return user; 
     }
 

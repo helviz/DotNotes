@@ -4,7 +4,7 @@ using NotesApp.Repository.Impl;
 
 namespace NotesApp.Service.Impl;
 
-public class TagService : GenericService<Tag>
+public class TagService : GenericService<Tag>, ITagService
 {
     public TagService(TagRepository repository) : base(repository)
     {
