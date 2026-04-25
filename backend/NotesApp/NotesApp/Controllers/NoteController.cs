@@ -26,8 +26,8 @@ public class NoteController : ControllerBase
             Content = dto.Content
         };
         
-        var created = await _noteService.InsertAsync(note);
-        return Created(ToDto(created));
+        await _noteService.InsertAsync(note);
+        return NoContent();
     }
 
     [HttpGet("{id}")]
