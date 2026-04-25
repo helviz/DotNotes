@@ -8,6 +8,6 @@ public interface IGenericService<T> where T: BaseEntity
     Task<T> GetById(int id);
     Task InsertAsync(T entity);
     Task DeleteById(int id);
-    Task UpdateById(T entity);
+    Task <T>Update(T entity);
 
 }

@@ -39,7 +39,8 @@ public class GenericService<T> : IGenericService<T> where T : BaseEntity
                 ErrorCode.NullEntity
             );
         }
-        await _repository.AddAsync(entity);
+        
+        
     }
 
     public async Task DeleteById(int id)
@@ -55,24 +56,26 @@ public class GenericService<T> : IGenericService<T> where T : BaseEntity
         await _repository.DeleteAsync(entity);
     }
 
-    public async Task UpdateById(T entity)
+    public async Task<T> Update(T entity)
     {
         if (entity == null)
         {
             throw new NoteException(
-                $"typeof(T).Name cannot be null",
+                $"{typeof(T).Name} cannot be null",
                 ErrorCode.NullEntity);
         }
 
-        var existing = _repository.GetByIdAsync(entity.Id);
+        var existing = await _repository.GetByIdAsync(entity.Id);
 
         if (existing == null)
         {
             throw new NoteException(
-                $"typeof(T).Name cannot be null", ErrorCode.NullEntity);
+                $"{typeof(T).Name} not found",
+                ErrorCode.NullEntity);
         }
 
         await _repository.UpdateAsync(entity);
-        
+
+        return entity;
     }
 }
