@@ -1,2 +1,2 @@
 # DotNotes
-A react dotnet application for note taking
+ASP.NET Note Taking Application
